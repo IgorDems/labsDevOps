@@ -1,0 +1,25 @@
+- name: install nginx
+  hosts: all
+  become: yes
+  tasks:
+    - name: run apt-get update
+      apt:
+       update_cache: yes
+    - name: install nginx
+      apt:
+        name: nginx
+        state: present
+    - name: start service
+      systemd:
+        name: nginx
+        state: restarted
+    #- name: stop nginx
+    #  systemd:
+    #    name: nginx
+    #    state: stopped
+    #- name: uninstall nginx
+    #  apt:
+    #    name: nginx
+    #    state: absent
+    #    purge: true
+    #    autoremove: true

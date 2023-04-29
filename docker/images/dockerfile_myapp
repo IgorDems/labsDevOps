@@ -1,0 +1,21 @@
+# wget https://github.com/lerndevops/code/raw/main/jdk-8u331-linux-x64.tar.gz
+# wget https://github.com/lerndevops/code/raw/main/apache-tomcat-9.0.63.tar.gz
+# wget https://github.com/lerndevops/code/raw/main/myapp.war
+
+FROM ubuntu:18.04
+
+#ADD instruction with tar it extracts the tar & copies the extracted content only
+ADD jdk-8u331-linux-x64.tar.gz /tmp
+RUN mv /tmp/jdk1.8.0_331 /opt/java
+ADD apache-tomcat-9.0.63.tar.gz /tmp
+RUN mv /tmp/apache-tomcat-9.0.63 /opt/tomcat
+
+ENV JAVA_HOME /opt/java
+ENV TOMCAT_HOME /opt/tomcat
+ENV JAVA_VERSION 1.8 
+ENV TOMCAT_VERSION 9.0.63 
+
+COPY myapp.war /opt/tomcat/webapps/ 
+
+EXPOSE 8080
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]
